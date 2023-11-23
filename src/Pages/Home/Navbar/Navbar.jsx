@@ -1,6 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  // console.log(user);
   return (
     <div>
       <nav className="flex flex-col md:flex-row md:justify-between md:items-center py-3 md:py-2  md:px-5 md:ml-0 bg-[#0A2647]">
@@ -9,7 +12,7 @@ const Navbar = () => {
             Byte <span className="text-[#ff006e]">Blitz</span>
           </h1>
         </div>
-        {/* navbar link page */}
+        {/* navbar link page route */}
         <div className="lg:w-1/3 lg:ml-[300px] ml-[70px]">
           <ul className="flex gap-5 font-bold  flex-row md:flex-row md:justify-center md:items-center text-white text-lg">
             <li>
@@ -46,44 +49,54 @@ const Navbar = () => {
         {/* registration and logggin part */}
         <div className="flex  lg:w-[700px] font-bold text-lg flex-col md:flex-row md:justify-end  md:items-center ">
           {/* registration */}
-          <div className="mb-3 md:mb-0 ml-[180px] md:ml-0 mr-[30px]">
+          {/* <div className="mb-3 md:mb-0 ml-[180px] md:ml-0 mr-[30px]">
             <Link to="/register">
               <button className=" btn-sm bg-[#3a86ff] text-white uppercase font-bold">
                 Registration
               </button>
             </Link>
-          </div>
+          </div> */}
 
-
-        {/* profile pic and username and login part */}
+          {/* profile pic and username and login part */}
           <div className="">
-            <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn btn-ghost btn-circle avatar border-2 border-[#3a86ff]">
-                <div className="w-10 rounded-full ">
-                  <img
-                    className="text-white"
-                    alt="Tailwind CSS Navbar component"
-                    src="/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  />
-                </div>
-              </label>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a className="justify-between">User Name</a>
-                </li>
-                <li>
-                  <a>DashBoard</a>
-                </li>
-                <li>
-                  <button className="btn btn-sm bg-[#3a86ff] text-white font-bold">
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
+            {user?.email ? (
+              <div className="dropdown dropdown-end">
+                <label
+                  tabIndex={0}
+                  className="btn btn-ghost btn-circle avatar border-2 border-[#3a86ff]"
+                >
+                  <div className="w-10 rounded-full ">
+                    <img
+                      className="text-white"
+                      src={user.photoURL}
+                      alt={user.displayName}
+                    />
+                  </div>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a className="justify-between"> {user.displayName}</a>
+                  </li>
+                  <li>
+                    <a>DashBoard</a>
+                  </li>
+                  <li>
+                    <button onClick={logOut} className="btn btn-sm bg-[#3a86ff] text-white font-bold">
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login">
+                <button className=" btn-sm bg-[#3a86ff] text-white uppercase font-bold lg:ml-[5px] md:ml-0 ml-[190px]">
+                  Login
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
