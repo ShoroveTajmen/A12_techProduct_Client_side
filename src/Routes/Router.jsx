@@ -3,6 +3,8 @@ import MainLayout from "../Layout/MainLayout";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import Products from "../Pages/Products/Products";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/Register/Register";
 
 const myCreateRoutes = createBrowserRouter([
     {
@@ -17,6 +19,14 @@ const myCreateRoutes = createBrowserRouter([
             {
                 path: 'products',
                 element: <Products></Products>
+            },
+            {
+                path: '/login',
+                element: <Login></Login>
+            },
+            {
+                path: '/register',
+                element: <Register></Register>
             }
         ]
     }
