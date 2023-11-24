@@ -78,7 +78,7 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <a className="justify-between"> {user.displayName}</a>
+                    <h1 className="justify-between"> {user.displayName}</h1>
                   </li>
                   <li>
                     <a>DashBoard</a>
