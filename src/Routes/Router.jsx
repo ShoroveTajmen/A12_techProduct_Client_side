@@ -9,6 +9,7 @@ import Dashboard from "../Layout/Dashboard/Dashboard";
 import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 import AddProducts from "../Pages/Dashboard/AddProducts/AddProducts";
 import MyProducts from "../Pages/Dashboard/MyProducts/MyProducts";
+import Payment from "../Pages/Payment/Payment";
 
 const myCreateRoutes = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ const myCreateRoutes = createBrowserRouter([
             {
                 path: 'myProducts',
                 element: <MyProducts></MyProducts>
+            },
+            {
+                path: 'payment',
+                element: <Payment></Payment>
             }
         ]
     }

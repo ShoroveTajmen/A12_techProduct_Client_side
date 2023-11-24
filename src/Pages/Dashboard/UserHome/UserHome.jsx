@@ -1,6 +1,7 @@
 import useAuth from "../../../hooks/useAuth";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { GoUnverified } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const UserHome = () => {
   const { user } = useAuth();
@@ -28,16 +29,22 @@ const UserHome = () => {
           </p>
         </div>
         <div className="flex justify-center mt-[50px]">
-          <h1 className="bg-blue-700 text-white w-[248px] p-2">
-            Please Subscribe:{" "}
-            <span className="bg-[#ff006e] p-[10px]">$100</span>
-          </h1>
+          <Link to='/dashboard/payment'>
+            {" "}
+            <h1 className="bg-blue-700 text-white w-[248px] p-2">
+              Please Subscribe:{" "}
+              <span className="bg-[#ff006e] p-[10px]">$100</span>
+            </h1>
+          </Link>
         </div>
         <div className="ml-[225px] justify-center mt-[20px]">
           <h1 className="bg-blue-700 text-white w-[230px] p-2">
-            Subscription Status 
+            Subscription Status
           </h1>
-          <h1 className="flex mb-[12px] text-[#ff006e] font-bold ml-[70px]"><RiVerifiedBadgeFill className="mt-[4px]"></RiVerifiedBadgeFill> Verified</h1>
+          <h1 className="flex mb-[12px] text-[#ff006e] font-bold ml-[70px]">
+            <RiVerifiedBadgeFill className="mt-[4px]"></RiVerifiedBadgeFill>{" "}
+            Verified
+          </h1>
         </div>
       </div>
     </div>
