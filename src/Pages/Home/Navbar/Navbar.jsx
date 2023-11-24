@@ -77,14 +77,15 @@ const Navbar = () => {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
-                  <li>
-                    <h1 className="justify-between"> {user.displayName}</h1>
+                  <h1 className="justify-between ml-2"> {user.displayName}</h1>
+                  <li className="bg-[#3a86ff] text-white font-bold mt-2">
+                    <Link to="/dashboard/myProfile">DashBoard</Link>
                   </li>
                   <li>
-                    <a>DashBoard</a>
-                  </li>
-                  <li>
-                    <button onClick={logOut} className="btn btn-sm bg-[#3a86ff] text-white font-bold">
+                    <button
+                      onClick={logOut}
+                      className="btn btn-sm bg-[#3a86ff] text-white font-bold rounded-none mt-2"
+                    >
                       Logout
                     </button>
                   </li>
