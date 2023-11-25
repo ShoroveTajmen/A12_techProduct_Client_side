@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 import useAuth from "../../../hooks/useAuth";
-import moment from "moment/moment";
+import axios from "axios";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddProducts = () => {
   const [tags, setTags] = useState([]);
-//   console.log(tags)
-  const {user} = useAuth();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
   const OwnerName = user.displayName;
   const OwnerImage = user.photoURL;
   const OwnerEmail = user.email;
 
-  const date = moment().format('MMMM Do YYYY, h:mm:ss a');
-  console.log(date);
+  //set real time
+  const createdAt = new Date();
 
   const handleAddProduct = (e) => {
     e.preventDefault();
@@ -21,7 +24,6 @@ const AddProducts = () => {
 
     const productName = form.productName.value;
     const productPic = form.productPic.value;
-    // const tags = form.tags.value;
     const link = form.link.value;
     const description = form.description.value;
 
@@ -36,27 +38,24 @@ const AddProducts = () => {
       OwnerEmail,
       status: "pending",
       upVote: 0,
-      date
-      
+      createdAt,
     };
     console.log(newProduct);
 
-    // //send newProduct data to the server
-    // fetch("https://brand-shop-server-side-kohl.vercel.app/product", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(newProduct),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     if (data.insertedId) {
-    //       Swal.fire("Product Added Successful", "success");
-    //       form.reset();
-    //     }
-    //   });
+    axiosSecure.post("/products", newProduct).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        form.reset();
+        setTags([]);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${productName} is added successfully!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
   return (
     <div className="shadow-lg p-24 lg:w-[1100px] mx-auto mt-12 mb-12">
