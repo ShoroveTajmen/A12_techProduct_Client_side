@@ -58,10 +58,10 @@ const Register = () => {
   return (
     <div>
       <div>
-        <h2 className="text-5xl my-10 text-center font-bold ml-4 md:ml-0 mt-14 text-[#0A2647]">
+        <h2 className="text-5xl my-10 text-center font-bold ml-4 md:ml-0 mt-14 text-white">
           Please Register
         </h2>
-        <div className="md:w-[500px] w-[400px] mx-auto h-[570px] border border-black mb-9 p-8">
+        <div className="md:w-[500px] w-[400px] mx-auto h-[570px] border border-black mb-9 p-8 bg-white">
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label">

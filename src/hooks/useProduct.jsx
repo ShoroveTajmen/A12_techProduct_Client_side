@@ -5,7 +5,7 @@ import useAxiosPublic from "./useAxiosPublic";
 const useProduct = () => {
 //using tanstack query to get data
 const axiosPublic = useAxiosPublic();
-const {data: products = []} = useQuery({
+const {data: products = [], refetch} = useQuery({
     queryKey: ['product'],
     queryFn: async () => {
         const res = await axiosPublic.get('/products')
@@ -13,7 +13,7 @@ const {data: products = []} = useQuery({
         return res.data;
     }
 })
-return [products]
+return [products, refetch]
 };
 
 export default useProduct;
