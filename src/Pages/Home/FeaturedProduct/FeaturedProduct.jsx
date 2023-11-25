@@ -4,6 +4,7 @@ import { FaVoteYea } from "react-icons/fa";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FcBrokenLink } from "react-icons/fc";
 import Swal from "sweetalert2";
 
 const FeaturedProduct = () => {
@@ -11,28 +12,27 @@ const FeaturedProduct = () => {
   //   console.log(products)
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
- 
 
   const handleUpVote = (id) => {
-    console.log('clicked');
-    axiosSecure.patch(`/upvote/${id}`, {
+    console.log("clicked");
+    axiosSecure
+      .patch(`/upvote/${id}`, {
         userEmail: user.email,
-    })
-    .then(res => {
+      })
+      .then((res) => {
         console.log(res.data);
-        if(res.data.modifiedCount > 0){
-            refetch();
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "vote done",
-                showConfirmButton: false,
-                timer: 1500,
-              });
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Vote done",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
-    })
-  }
-
+      });
+  };
 
   return (
     <div>
@@ -54,7 +54,13 @@ const FeaturedProduct = () => {
                 />
               </figure>
               <div className="ml-[10px] mt-[30px] text-left">
-                <h2 className="font-bold text-xl">{product.productName}</h2>
+                <Link to={`/product/${product._id}`}>
+                  {" "}
+                  <h2 className="font-bold text-xl flex gap-1">
+                    <FcBrokenLink className="mt-1"></FcBrokenLink>
+                    {product.productName}
+                  </h2>
+                </Link>
                 <h1 className="flex gap-2 font-bold mt-2 mb-2">
                   <BsFillCalendarDateFill className="mt-1 text-[#3a86ff]"></BsFillCalendarDateFill>
                   {product.createdAt.slice(0, 10)}
@@ -79,16 +85,16 @@ const FeaturedProduct = () => {
                   </a>
                 </h1>
                 {user?.email === product.OwnerEmail ? (
-                  <button className="flex gap-2 mt-4 btn btn-disabled">
+                  <button className="flex gap-2 mt-4 btn btn-disabled rounded-none">
                     <FaVoteYea className=" text-[30px] text-white"></FaVoteYea>
                     <h1 className="font-bold text-[20px] text-[#de369d]">
                       {product.upVote}
                     </h1>
                   </button>
                 ) : !user?.email ? (
-                  <Link to='/login'>
+                  <Link to="/login">
                     {" "}
-                    <button className="flex gap-2 mt-4 btn bg-black">
+                    <button className="flex gap-2 mt-4 btn bg-black rounded-none">
                       <FaVoteYea className=" text-[30px] text-[#3a86ff]"></FaVoteYea>
                       <h1 className="font-bold text-[20px] text-[#de369d]">
                         {product.upVote}
@@ -96,7 +102,10 @@ const FeaturedProduct = () => {
                     </button>
                   </Link>
                 ) : (
-                  <button onClick={() => handleUpVote(product._id)} className="flex gap-2 mt-4 btn bg-black">
+                  <button
+                    onClick={() => handleUpVote(product._id)}
+                    className="flex gap-2 mt-4 btn bg-black rounded-none"
+                  >
                     <FaVoteYea className=" text-[30px] text-[#3a86ff]"></FaVoteYea>
                     <h1 className="font-bold text-[20px] text-[#de369d]">
                       {product.upVote}
