@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <div className="max-w-[1600px] mx-auto">
+        <div className="max-w-[1600px] mx-auto bg-[#0A2647]">
           <RouterProvider router={myCreateRoutes} />
         </div>
       </QueryClientProvider>

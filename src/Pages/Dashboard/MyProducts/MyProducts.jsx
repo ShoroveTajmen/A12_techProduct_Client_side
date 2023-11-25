@@ -4,8 +4,6 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const MyProducts = () => {
   const [products] = useProduct();
-  const [tags] = products;
-  console.log(tags);
   return (
     <div>
       {products.slice(0, 5).map((product) => (
