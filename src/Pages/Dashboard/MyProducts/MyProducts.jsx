@@ -1,38 +1,66 @@
+/* eslint-disable no-undef */
 import { Link } from "react-router-dom";
 import useProduct from "../../../hooks/useProduct";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+import { MdEditSquare } from "react-icons/md";
+import useAuth from "../../../hooks/useAuth";
 
 const MyProducts = () => {
-  const [products] = useProduct();
+  const [products, isLoading, refetch] = useProduct();
+  const {user} = useAuth();
+console.log(products);
+
+const myProducts = products.filter(item => item.OwnerEmail === user.email);
+console.log(myProducts)
+
   return (
     <div>
-      {products.slice(0, 5).map((product) => (
-        <div
-          key={product._id}
-          className="card card-compact w-96 bg-base-100 shadow-xl"
-        >
-          <figure>
-            <img
-              src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-              alt="Shoes"
-            />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">{product.OwnerName}</h2>
-            <h1>{product.productName}</h1>
-            <p>{product.OwnerEmail}</p>
-            <h1>{product.createdAt}</h1>
-            <div className="flex gap-2">
-              <h1>{product.tags[0]}</h1>
-              <h1>{product.tags[1]}</h1>
-              <h1>{product.tags[2]}</h1>
-            </div>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">{product.upVote}</button>
-            </div>
-          </div>
+      <div>
+        <div className="overflow-x-auto bg-white shadow-xl">
+          <table className="table w-full">
+            {/* head */}
+            <thead>
+              <tr className="text-lg text-blue-700">
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Votes</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {myProducts.map((item, index) => (
+                  <tr key={item._id}>
+                    <td>{index + 1}</td>
+                    <td className="w-[270px] ">
+                      {item.productName}
+                    </td>
+                    <td className="">{item.upVote}</td>
+                    <td className="text-left">{item.status}</td>
+                    <td>
+                      <Link to={`/dashboard/updateItem/${item._id}`}>
+                        {" "}
+                        <button className="btn btn-ghost btn-sm bg-blue-500">
+                          <MdEditSquare className="text-white "></MdEditSquare>
+                        </button>
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => handleDeleteItem(item)}
+                        className="btn btn-ghost btn-lg "
+                      >
+                        <FaTrashAlt className="text-red-600"></FaTrashAlt>
+                      </button>
+                    </td>
+                  </tr>
+                ) 
+              )}
+            </tbody>
+          </table>
         </div>
-      ))}
+      </div>
     </div>
   );
 };
