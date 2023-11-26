@@ -1,23 +1,26 @@
+/* eslint-disable no-undef */
 import { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
-import useAuth from "../../../hooks/useAuth";
-import axios from "axios";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useLoaderData, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-const AddProducts = () => {
+const UpdateProducts = () => {
+    const axiosSecure = useAxiosSecure();
   const [tags, setTags] = useState([]);
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const {_id,productName,productPic,  link, description, tags:tagss} = useLoaderData();
+console.log(_id,productName,productPic,  link, description, tagss);
 
   const OwnerName = user.displayName;
   const OwnerImage = user.photoURL;
   const OwnerEmail = user.email;
-
   //set real time
   const createdAt = new Date();
 
-  const handleAddProduct = (e) => {
+  const handleUpdateProduct = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -27,7 +30,7 @@ const AddProducts = () => {
     const link = form.link.value;
     const description = form.description.value;
 
-    const newProduct = {
+    const updateProduct = {
       productName,
       productPic,
       tags,
@@ -40,29 +43,28 @@ const AddProducts = () => {
       upVote: 0,
       createdAt,
     };
-    console.log(newProduct);
+    console.log(updateProduct);
 
-    axiosSecure.post("/products", newProduct).then((res) => {
-      console.log(res.data);
-      if (res.data.insertedId) {
-        form.reset();
-        setTags([]);
+    //send updateProduct data to the server
+    const productRes = await axiosSecure.patch(`/updateProduct/${_id}`, updateProduct);
+    console.log(productRes.data);
+    if(productRes.data.modifiedCount > 0){
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${productName} is added successfully!`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
+            position: "top-end",
+            icon: "success",
+            title: 'Product update successfully',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+    }
   };
+
   return (
     <div className="shadow-lg p-24 lg:w-[1100px] mx-auto mt-12 mb-12 bg-white">
       <h2 className="text-4xl mb-8 lg:mb-0 font-bold uppercase text-[#144272]">
-        Add a Product
+        Update Product
       </h2>
-      <form onSubmit={handleAddProduct}>
+      <form onSubmit={handleUpdateProduct}>
         {/* product name and product img */}
         <div className="flex mb-8">
           <div className="form-control lg:w-1/2">
@@ -75,6 +77,7 @@ const AddProducts = () => {
               <input
                 type="text"
                 name="productName"
+                defaultValue={productName}
                 placeholder="Product Name"
                 className="input input-bordered  w-full"
               />
@@ -90,6 +93,7 @@ const AddProducts = () => {
               <input
                 type="text"
                 name="productPic"
+                defaultValue={productPic}
                 placeholder="Product Pic"
                 className="input input-bordered  w-full"
               />
@@ -108,6 +112,7 @@ const AddProducts = () => {
               <TagsInput
                 value={tags}
                 onChange={setTags}
+                defaultValue={tagss}
                 name="tags"
                 placeHolder="Enter Product Tags"
               />
@@ -125,12 +130,13 @@ const AddProducts = () => {
                 type="text"
                 name="link"
                 placeholder="EXternal Link"
+                defaultValue={link}
                 className="input input-bordered  w-full"
               />
             </label>
           </div>
         </div>
-        {/* form photo url */}
+        {/* form description */}
         <div className="mb-8">
           <div className="form-control w-full">
             <label className="label">
@@ -142,6 +148,7 @@ const AddProducts = () => {
               <input
                 type="text"
                 name="description"
+                defaultValue={description}
                 placeholder="Product Description"
                 className="input input-bordered  w-full"
               />
@@ -150,7 +157,7 @@ const AddProducts = () => {
         </div>
         <input
           type="submit"
-          value="Add Product"
+          value="Update Product"
           className=" btn  bg-[#3a86ff] font-bold text-white uppercase lg:w-[400px] ml-[50px] lg:ml-[250px]"
         />
       </form>
@@ -158,4 +165,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default UpdateProducts;

@@ -39,7 +39,7 @@ console.log(myProducts)
                     <td className="">{item.upVote}</td>
                     <td className="text-left">{item.status}</td>
                     <td>
-                      <Link to={`/dashboard/updateItem/${item._id}`}>
+                      <Link to={`/dashboard/updateProduct/${item._id}`}>
                         {" "}
                         <button className="btn btn-ghost btn-sm bg-blue-500">
                           <MdEditSquare className="text-white "></MdEditSquare>
