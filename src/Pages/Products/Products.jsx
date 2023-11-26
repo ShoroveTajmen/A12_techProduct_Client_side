@@ -1,20 +1,29 @@
 /* eslint-disable no-undef */
 import { useState } from "react";
 import { BsFillCalendarDateFill } from "react-icons/bs";
-import { FaSearch, FaVoteYea } from "react-icons/fa";
 import { FcBrokenLink } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { FcSearch } from "react-icons/fc";
+import { FaVoteYea } from "react-icons/fa";
 
 const Products = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [search, setSearch] = useState("");
+  //   const [, refetch] = useProduct();
+
+  //pagination related
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+  const { count } = useLoaderData();
+  const numberOfPages = Math.ceil(count / itemsPerPage);
+  console.log(numberOfPages);
+  const pages = [...Array(numberOfPages).keys()];
+  console.log(pages);
 
   //using tanstack query to get all data
   const axiosPublic = useAxiosPublic();
@@ -23,11 +32,12 @@ const Products = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["productsBytags", { search }],
+    queryKey: ["productsBytags", search,currentPage, numberOfPages],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/productsByTags?search=${search}`);
-    //   console.log(res.data);
-      refetch();
+      const res = await axiosPublic.get(
+        `/productsByTags?search=${search}&page=${currentPage}&size=${itemsPerPage}`
+      );
+    //   refetch();
       return res.data;
     },
   });
@@ -41,8 +51,9 @@ const Products = () => {
     const searchText = e.target.search.value;
     // console.log(searchText);
     setSearch(searchText);
+    refetch();
   };
-//   console.log(search);
+  //   console.log(search);
 
   const handleUpVote = (id) => {
     console.log("clicked");
@@ -50,6 +61,7 @@ const Products = () => {
       .patch(`/upvote/${id}`, {
         userEmail: user.email,
       })
+
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
@@ -65,12 +77,53 @@ const Products = () => {
       });
   };
 
+  const handleItemsPerPage = (e) => {
+    const val = parseInt(e.target.value);
+    console.log(val);
+    setItemsPerPage(val);
+    setCurrentPage(0);
+    refetch();
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pages.length - 1) {
+      {
+        setCurrentPage(currentPage + 1);
+        refetch();
+      }
+    }
+  };
+
+  const handlePage = (page) => {
+    setCurrentPage(page)
+    refetch();
+
+  }
+
   return (
     <div>
+      {/* search portion */}
       <div className="p-10 flex justify-center">
         <form onSubmit={handleSearch}>
-          <input placeholder=' search here' type="text" name="search" id="" className="w-[500px] h-[50px] border-2 border-blue-300 relative"/>
-          <input type="submit" value="Search" className="btn rounded-none bg-[#ff006e] border-none text-white font-bold text-[20px]" />
+          <input
+            placeholder=" search here"
+            type="text"
+            name="search"
+            id=""
+            className="w-[500px] h-[50px] border-2 border-blue-300 relative"
+          />
+          <input
+            type="submit"
+            value="Search"
+            className="btn rounded-none bg-[#ff006e] border-none text-white font-bold text-[20px]"
+          />
         </form>
       </div>
 
@@ -152,6 +205,38 @@ const Products = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* pagination */}
+      <div className=" text-red-700 text-center mb-[40px]">
+        <p className="text-white">CurrentPage: {currentPage}</p>
+        <button onClick={handlePrevPage} className="btn mr-[10px]">
+          Prev
+        </button>
+        {pages.map((page) => (
+          <button
+            className={` text-pink-500 btn mr-[10px] ${
+              currentPage === page ? "bg-[#3a86ff]" : ""
+            }`}
+            onClick={() => handlePage(page)}
+            key={page}
+          >
+            {page}
+          </button>
+        ))}
+        <select
+          value={itemsPerPage}
+          onChange={handleItemsPerPage}
+          name=""
+          id=""
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+        <button onClick={handleNextPage} className="btn ml-[10px]">
+          Next
+        </button>
       </div>
     </div>
   );
