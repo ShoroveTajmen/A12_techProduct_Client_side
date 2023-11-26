@@ -209,14 +209,13 @@ const Products = () => {
 
       {/* pagination */}
       <div className=" text-red-700 text-center mb-[40px]">
-        <p className="text-white">CurrentPage: {currentPage}</p>
-        <button onClick={handlePrevPage} className="btn mr-[10px]">
+        <button onClick={handlePrevPage} className="btn mr-[10px] bg-[#ff006e] text-white rounded-none border-none font-bold">
           Prev
         </button>
         {pages.map((page) => (
           <button
-            className={` text-pink-500 btn mr-[10px] ${
-              currentPage === page ? "bg-[#3a86ff]" : ""
+            className={`  border-none rounded-none btn mr-[10px] ${
+              currentPage === page ? "bg-[#3a86ff] text-white font-bold" : "text-black font-bold"
             }`}
             onClick={() => handlePage(page)}
             key={page}
@@ -234,7 +233,7 @@ const Products = () => {
           <option value="10">10</option>
           <option value="20">20</option>
         </select>
-        <button onClick={handleNextPage} className="btn ml-[10px]">
+        <button onClick={handleNextPage} className="btn ml-[10px] bg-[#ff006e] text-white rounded-none border-none font-bold">
           Next
         </button>
       </div>
