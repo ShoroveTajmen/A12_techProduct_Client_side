@@ -1,18 +1,34 @@
-import useAuth from "../../../hooks/useAuth";
-import useProduct from "../../../hooks/useProduct";
-import { FaVoteYea } from "react-icons/fa";
 import { BsFillCalendarDateFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaVoteYea } from "react-icons/fa";
 import { FcBrokenLink } from "react-icons/fc";
+import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
-const FeaturedProduct = () => {
-  const [products, refetch] = useProduct();
-  //   console.log(products)
+const TrendingProducts = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  
+
+  //using tanstack query to get products data sorting by vote
+  const axiosPublic = useAxiosPublic();
+  const {
+    data: products = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["productsByVote"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/productsByVote");
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  if (isLoading) {
+    return <p>Hello</p>;
+  }
 
   const handleUpVote = (id) => {
     console.log("clicked");
@@ -38,14 +54,14 @@ const FeaturedProduct = () => {
   return (
     <div>
       <h1 className="text-4xl text-center font-bold text-white mt-[40px]">
-        Featured Products
+        Our Most Trending Products
       </h1>
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-5  md:w-[770px] w-[350px] lg:w-[1500px] mx-auto mt-[30px] md:mt-[70px] md:mb-[70px]">
-          {products.slice(0, 4).map((product) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  lg:gap-5  md:w-[770px] w-[350px] lg:w-[1100px] mx-auto mt-[30px] md:mt-[70px] md:mb-[70px] ">
+          {products.slice(0, 6).map((product) => (
             <div
               key={product._id}
-              className="card w-[365px] bg-base-100 rounded-none border-4 border-[#3a86ff] h-[530px]"
+              className="card w-[365px] rounded-none border-2 border-white h-[530px] bg-[#205295] text-white "
             >
               <figure className="px-10 pt-10">
                 <img
@@ -71,7 +87,7 @@ const FeaturedProduct = () => {
                   {product.tags.map((tag, i) => (
                     <h2
                       key={i}
-                      className="font-bold text-sm border-2 border-blue-700 p-1 mt-2"
+                      className="font-bold text-sm border-2 border-pink-200 p-1 mt-2"
                     >
                       {tag}
                     </h2>
@@ -80,7 +96,7 @@ const FeaturedProduct = () => {
                 <h1 className="mt-2 font-bold ">
                   For More Details:
                   <a href={product.link}>
-                    <span className="ml-2 text-blue-700 font-bold underline">
+                    <span className="ml-2 text-red-300 font-bold underline">
                       Click Here
                     </span>
                   </a>
@@ -118,8 +134,14 @@ const FeaturedProduct = () => {
           ))}
         </div>
       </div>
+      <Link to='/products'>
+        {" "}
+        <button className="text-white btn bg-[#ff006e] border-none rounded-none font-bold text-lg ml-[700px]">
+          Show All Products
+        </button>
+      </Link>
     </div>
   );
 };
 
-export default FeaturedProduct;
+export default TrendingProducts;
