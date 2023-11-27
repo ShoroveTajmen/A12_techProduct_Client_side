@@ -12,6 +12,12 @@ import MyProducts from "../Pages/Dashboard/MyProducts/MyProducts";
 import Payment from "../Pages/Payment/Payment";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import UpdateProducts from "../Pages/UpdateProducts/UpdateProducts";
+import ProductReviewQueue from "../Pages/Dashboard/ProductReviewQueue/ProductReviewQueue";
+import ReportedProduct from "../Pages/Dashboard/ReportedProduct/ReportedProduct";
+import StatisticsExhibit from "../Pages/Dashboard/StatisticsExhibit/StatisticsExhibit";
+import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
+import ManageCoupons from "../Pages/Dashboard/ManageCoupons/ManageCoupons";
+
 
 const myCreateRoutes = createBrowserRouter([
     {
@@ -69,6 +75,30 @@ const myCreateRoutes = createBrowserRouter([
             {
                 path: 'payment',
                 element: <Payment></Payment>
+            },
+
+            //Moderators routes only
+            {
+                path: 'productReviewQueue',
+                element: <ProductReviewQueue></ProductReviewQueue>
+            },
+            {
+                path: 'reportedProduct',
+                element: <ReportedProduct></ReportedProduct>
+            },
+
+            //Admin routes Only
+            {
+                path: 'statistics',
+                element: <StatisticsExhibit></StatisticsExhibit>
+            },
+            {
+                path: 'manageUsers',
+                element: <ManageUsers></ManageUsers>
+            },
+            {
+                path: 'manageCoupons',
+                element: <ManageCoupons></ManageCoupons>
             }
         ]
     }
