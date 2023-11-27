@@ -1,18 +1,31 @@
 /* eslint-disable no-undef */
 import { Link } from "react-router-dom";
-import useProduct from "../../../hooks/useProduct";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const MyProducts = () => {
   const axiosSecure = useAxiosSecure();
-  const [products, isLoading, refetch] = useProduct();
-  console.log(refetch);
   const { user } = useAuth();
-  const myProducts = products.filter((item) => item.OwnerEmail === user.email);
+
+
+  //using tanstack query to get data
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["userProducts"],
+    queryFn: async () => {
+      
+      const res = await axiosSecure.get(`/userProducts?userEmail=${user.email}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  //   console.log(data)
+  if (isLoading) {
+    return <p>Hello</p>;
+  }
 
   const handleDeleteItem = (item) => {
     Swal.fire({
@@ -33,7 +46,7 @@ const MyProducts = () => {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: `${item.name} has been deleted`,
+            title: `Product deleted successfully`,
             showConfirmButton: false,
             timer: 1500,
           });
@@ -59,14 +72,14 @@ const MyProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {myProducts.map((item, index) => (
+              {data?.map((item, index) => (
                 <tr key={item._id}>
                   <td>{index + 1}</td>
-                  <td className="w-[270px] ">{item.productName}</td>
-                  <td className="">{item.upVote}</td>
-                  <td className="text-left">{item.status}</td>
+                  <td className="w-[270px] ">{item?.productName}</td>
+                  <td className="">{item?.upVote}</td>
+                  <td className="text-left">{item?.status}</td>
                   <td>
-                    <Link to={`/dashboard/updateProduct/${item._id}`}>
+                    <Link to={`/dashboard/updateProduct/${item?._id}`}>
                       {" "}
                       <button className="btn btn-ghost btn-sm bg-blue-500">
                         <MdEditSquare className="text-white "></MdEditSquare>
