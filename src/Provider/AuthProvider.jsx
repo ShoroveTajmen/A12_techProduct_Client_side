@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../FirebaseConfig/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 //making context
 export const AuthContext = createContext(null);
@@ -18,6 +19,7 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
   //log in using google
   const googleLogin = () => {
@@ -54,9 +56,22 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
+      if(user){
+        //get token and store client
+        const userInfo = {email: user.email};
+        axiosPublic.post('/jwt', userInfo)
+        .then(res => {
+          if(res.data.token){
+            localStorage.setItem('access-token', res.data.token);
+          }
+        })
+      }else{
+        //remove token
+        localStorage.removeItem('access-token');
+      }
       setLoading(false);
     });
-  }, []);
+  }, [axiosPublic]);
 console.log(user)
 
   const authInfo = {
