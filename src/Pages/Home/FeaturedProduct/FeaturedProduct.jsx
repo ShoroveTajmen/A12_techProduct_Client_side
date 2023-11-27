@@ -1,20 +1,33 @@
 import useAuth from "../../../hooks/useAuth";
-import useProduct from "../../../hooks/useProduct";
 import { FaVoteYea } from "react-icons/fa";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FcBrokenLink } from "react-icons/fc";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const FeaturedProduct = () => {
-  const [products, refetch] = useProduct();
-  //   console.log(products)
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  
 
-  const handleUpVote = (id) => {
+  //get featurred products
+  const axiosPublic = useAxiosPublic();
+  const {
+    data: products = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["featuredProduct"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/featuredProducts");
+      console.log(res.data)
+      return res.data;
+    },
+  });
+
+   const handleUpVote = (id) => {
     console.log("clicked");
     axiosSecure
       .patch(`/upvote/${id}`, {

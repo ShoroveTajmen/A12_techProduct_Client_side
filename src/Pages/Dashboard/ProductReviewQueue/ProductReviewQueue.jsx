@@ -4,10 +4,12 @@ import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { LuBookMarked } from "react-icons/lu";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const ProductReviewQueue = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
   //using tanstack query to get data
   const { data, refetch, isLoading } = useQuery({
@@ -23,50 +25,66 @@ const ProductReviewQueue = () => {
     return <p>Hello</p>;
   }
 
-    const handleAcceptProduct = async (id) => {
-      // Make an API call to update the product status to 'accepted'
-      await axiosSecure
-        .patch(`/updateProductStatus1/${id}`, {
-          status: "accepted",
-        })
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount > 1) {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: 'Product Accepted',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
-      // Refetch the data to update the UI
-      refetch();
-    };
-    const handleRejectProduct = async (id) => {
-      // Make an API call to update the product status to 'accepted'
-      await axiosSecure
-        .patch(`/updateProductStatus2/${id}`, {
-          status: "rejected",
-        })
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount > 1) {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: 'Product Rejected',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
-      // Refetch the data to update the UI
-      refetch();
-    };
+  const handleAcceptProduct = async (id) => {
+    // Make an API call to update the product status to 'accepted'
+    await axiosSecure
+      .patch(`/updateProductStatus1/${id}`, {
+        status: "accepted",
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.modifiedCount > 1) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Product Accepted",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    // Refetch the data to update the UI
+    refetch();
+  };
+  const handleRejectProduct = async (id) => {
+    // Make an API call to update the product status to 'accepted'
+    await axiosSecure
+      .patch(`/updateProductStatus2/${id}`, {
+        status: "rejected",
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.modifiedCount > 1) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Product Rejected",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    // Refetch the data to update the UI
+    refetch();
+  };
 
-
+  const handleMarksFeatured = async (id) => {
+    await axiosSecure.post(`/marksFeatured/${id}`);
+    // Show success message
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Product added to the featured collection",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    // Update the featuredProducts state
+    setFeaturedProducts((prevFeaturedProducts) => [
+      ...prevFeaturedProducts,
+      id,
+    ]);
+    refetch();
+  };
 
   return (
     <div>
@@ -100,15 +118,27 @@ const ProductReviewQueue = () => {
                   </td>
                   <td className="text-left">
                     {" "}
-                    <button className="btn btn-ghost btn-sm bg-pink-600">
+                   
+                    <button
+                      onClick={() => handleMarksFeatured(item?._id)}
+                      disabled={featuredProducts.includes(item?._id)}
+                      className={`btn  btn-sm ${
+                        featuredProducts.includes(item?._id)
+                          ?  "bg-gray-300 text-gray-500"
+                          : "bg-pink-600 text-white"
+                      }`}
+                    >
                       <LuBookMarked className="text-white "></LuBookMarked>
                     </button>
                   </td>
                   <td>
                     {" "}
                     <button
-                      onClick={() => handleAcceptProduct(item._id)}
-                      disabled={item?.status === "accepted" || item?.status === "rejected"}
+                      onClick={() => handleAcceptProduct(item?._id)}
+                      disabled={
+                        item?.status === "accepted" ||
+                        item?.status === "rejected"
+                      }
                       className="btn btn-ghost btn-sm bg-green-600 text-white"
                     >
                       {item?.status}
@@ -117,8 +147,11 @@ const ProductReviewQueue = () => {
                   <td>
                     {" "}
                     <button
-                      onClick={() => handleRejectProduct(item._id)}
-                      disabled={item?.status === "accepted" || item?.status === "rejected"}
+                      onClick={() => handleRejectProduct(item?._id)}
+                      disabled={
+                        item?.status === "accepted" ||
+                        item?.status === "rejected"
+                      }
                       className="btn btn-ghost btn-sm bg-red-500 text-white"
                     >
                       {item?.status}
