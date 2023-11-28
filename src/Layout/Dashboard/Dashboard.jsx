@@ -10,67 +10,78 @@ import { MdReportOff } from "react-icons/md";
 import { PiChartBarFill } from "react-icons/pi";
 import { PiUsersFourFill } from "react-icons/pi";
 import { RiCoupon5Fill } from "react-icons/ri";
+import useAdmin from "../../hooks/useAdmin";
 
 const Dashboard = () => {
+  const [isAdmin] = useAdmin();
   return (
     <div>
       <div className="flex">
         {/* dashboard side bar */}
         <div className="w-64 min-h-screen bg-[#004e89]">
           <ul className="menu p-4 ">
-            <li className="font-bold  uppercase  text-white">
-              <NavLink to="/dashboard/myProfile">
-                <FaAddressBook className="text-yellow-400"></FaAddressBook>My
-                Profile
-              </NavLink>
-            </li>
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/addProducts">
-                <FaShoppingBasket className="text-yellow-400"></FaShoppingBasket>
-                Add Products
-              </NavLink>
-            </li>
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/myProducts">
-                <FaShoppingCart className="text-yellow-400"></FaShoppingCart>My
-                Products
-              </NavLink>
-            </li>
+            {isAdmin ? (
+              <>
+                {/* Admin Portion */}
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/statistics">
+                    <PiChartBarFill className="text-yellow-400"></PiChartBarFill>
+                    Statistics Exhibit
+                  </NavLink>
+                </li>
+
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/manageUsers">
+                    <PiUsersFourFill className="text-yellow-400"></PiUsersFourFill>
+                    Manage Users
+                  </NavLink>
+                </li>
+
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/manageCoupons">
+                    <RiCoupon5Fill className="text-yellow-400"></RiCoupon5Fill>
+                    Manage Coupons
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                {/* normal users portion */}
+                <li className="font-bold  uppercase  text-white">
+                  <NavLink to="/dashboard/myProfile">
+                    <FaAddressBook className="text-yellow-400"></FaAddressBook>
+                    My Profile
+                  </NavLink>
+                </li>
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/addProducts">
+                    <FaShoppingBasket className="text-yellow-400"></FaShoppingBasket>
+                    Add Products
+                  </NavLink>
+                </li>
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/myProducts">
+                    <FaShoppingCart className="text-yellow-400"></FaShoppingCart>
+                    My Products
+                  </NavLink>
+                </li>
+              </>
+            )}
 
             {/* Moderator portion */}
             <li className="font-bold  uppercase mt-2 text-white">
               <NavLink to="/dashboard/productReviewQueue">
-                <MdOutlineReviews className="text-yellow-400"></MdOutlineReviews>Product Review Queue
+                <MdOutlineReviews className="text-yellow-400"></MdOutlineReviews>
+                Product Review Queue
               </NavLink>
             </li>
 
             <li className="font-bold  uppercase mt-2 text-white">
               <NavLink to="/dashboard/reportedProduct">
-                <MdReportOff className="text-yellow-400"></MdReportOff>Reported Products
+                <MdReportOff className="text-yellow-400"></MdReportOff>Reported
+                Products
               </NavLink>
             </li>
-
-
-            {/* Admin Portion */}
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/statistics">
-                <PiChartBarFill className="text-yellow-400"></PiChartBarFill>Statistics Exhibit
-              </NavLink>
-            </li>
-
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/manageUsers">
-                <PiUsersFourFill className="text-yellow-400"></PiUsersFourFill>Manage Users
-              </NavLink>
-            </li>
-
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/manageCoupons">
-                <RiCoupon5Fill className="text-yellow-400"></RiCoupon5Fill>Manage Coupons
-              </NavLink>
-            </li>
-
-
 
             {/* Shared NavLink */}
             <div className="divider divider-warning w-[230px] mx-auto"></div>

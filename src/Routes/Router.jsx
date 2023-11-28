@@ -17,91 +17,95 @@ import ReportedProduct from "../Pages/Dashboard/ReportedProduct/ReportedProduct"
 import StatisticsExhibit from "../Pages/Dashboard/StatisticsExhibit/StatisticsExhibit";
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import ManageCoupons from "../Pages/Dashboard/ManageCoupons/ManageCoupons";
-
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const myCreateRoutes = createBrowserRouter([
-    {
-        path: '/',
-        element: <MainLayout></MainLayout>,
-        errorElement:<ErrorPage></ErrorPage>,
-        children: [
-            {
-                path: '/',
-                element: <Home></Home>
-            },
-            {
-                path: 'products',
-                element: <Products></Products>,
-                loader: () => fetch('http://localhost:5001/productsCount')
-            },
-            {
-                path: '/product/:id',
-                element: <ProductDetails></ProductDetails>
-            },
-            {
-                path: '/login',
-                element: <Login></Login>
-            },
-            {
-                path: '/register',
-                element: <Register></Register>
-            }
-        ]
-    },
+  {
+    path: "/",
+    element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "products",
+        element: <Products></Products>,
+        loader: () => fetch("http://localhost:5001/productsCount"),
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetails></ProductDetails>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+    ],
+  },
 
-    //Dashboard Portion
-    {
-        path: 'dashboard',
-        element: <Dashboard></Dashboard>,
-        children: [
-            //Normal User Routes
-            {
-                path: 'myProfile',
-                element: <UserHome></UserHome>
-            },
-            {
-                path: 'addProducts',
-                element: <AddProducts></AddProducts>
-            },
-            {
-                path: 'myProducts',
-                element: <MyProducts></MyProducts>
-            },
-            {
-                path: 'updateProduct/:id',
-                element: <UpdateProducts></UpdateProducts>,
-                loader: ({params}) => fetch(`http://localhost:5001/products/${params.id}`)
-            },
-            {
-                path: 'payment',
-                element: <Payment></Payment>
-            },
+  //Dashboard Portion
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    children: [
+      //Normal User Routes
+      {
+        path: "myProfile",
+        element: <UserHome></UserHome>,
+      },
+      {
+        path: "addProducts",
+        element: <AddProducts></AddProducts>,
+      },
+      {
+        path: "myProducts",
+        element: <MyProducts></MyProducts>,
+      },
+      {
+        path: "updateProduct/:id",
+        element: <UpdateProducts></UpdateProducts>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5001/products/${params.id}`),
+      },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
 
-            //Moderators routes only
-            {
-                path: 'productReviewQueue',
-                element: <ProductReviewQueue></ProductReviewQueue>
-            },
-            {
-                path: 'reportedProduct',
-                element: <ReportedProduct></ReportedProduct>
-            },
+      //Moderators routes only
+      {
+        path: "productReviewQueue",
+        element: <ProductReviewQueue></ProductReviewQueue>,
+      },
+      {
+        path: "reportedProduct",
+        element: <ReportedProduct></ReportedProduct>,
+      },
 
-            //Admin routes Only
-            {
-                path: 'statistics',
-                element: <StatisticsExhibit></StatisticsExhibit>
-            },
-            {
-                path: 'manageUsers',
-                element: <ManageUsers></ManageUsers>
-            },
-            {
-                path: 'manageCoupons',
-                element: <ManageCoupons></ManageCoupons>
-            }
-        ]
-    }
-
-])
+      //Admin routes Only
+      {
+        path: "statistics",
+        element: <StatisticsExhibit></StatisticsExhibit>,
+      },
+      {
+        path: "manageUsers",
+        element: <ManageUsers></ManageUsers>,
+      },
+      {
+        path: "manageCoupons",
+        element: <ManageCoupons></ManageCoupons>,
+      },
+    ],
+  },
+]);
 export default myCreateRoutes;

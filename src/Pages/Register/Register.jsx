@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import SocialLogin from "../Login/SocialLogin";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const { createUser, handleUpdateProfile } = useAuth();
   const navigate = useNavigate();
   const [regError, setRegError] = useState("");
@@ -41,11 +43,20 @@ const Register = () => {
     //create a new user
     createUser(email, password)
       .then((res) => {
-        console.log(res);
+        console.log(res.user);
         handleUpdateProfile(name, photo).then(() => {
-          // toast.success("Registration SucessFully");
-          Swal.fire("Registration Successful", "success");
-          navigate("/");
+         //create user entry in the database
+         const userInfo = {
+          name,
+          email
+        };
+        axiosPublic.post('/users', userInfo).then(res => {
+          if(res.data.insertedId){
+            console.log('user added to the database');
+            Swal.fire("Registration Successful", "success");
+            navigate("/");
+          }
+        })
         });
       })
       .catch((error) => {

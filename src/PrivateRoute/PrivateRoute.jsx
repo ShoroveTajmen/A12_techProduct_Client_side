@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
     return <span className="loading loading-infinity loading-lg"></span>;
   }
 
-  if (user?.email) {
+  if (user) {
     return children;
   }
   return <Navigate state={location.pathname} to="/login"></Navigate>;

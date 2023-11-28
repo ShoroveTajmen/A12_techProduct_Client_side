@@ -1,9 +1,10 @@
-
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SocialLogin = () => {
+  const axiosPublic = useAxiosPublic();
   const { googleLogin } = useAuth();
   const navigate = useNavigate();
 
@@ -11,8 +12,15 @@ const SocialLogin = () => {
     login()
       .then((res) => {
         console.log(res);
-        toast.success("Login Successful");
-        navigate("/");
+        const userInfo = {
+          email: res.user?.email,
+          name: res.user?.displayName,
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          console.log(res.data);
+          toast.success("Login Successful");
+          navigate("/");
+        });
       })
       .catch((error) => {
         console.log(error);
