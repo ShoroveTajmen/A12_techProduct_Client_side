@@ -1,8 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import useAdmin from "../../../hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [isAdmin] = useAdmin();
   // console.log(user);
   return (
     <div>
@@ -43,20 +45,38 @@ const Navbar = () => {
                 PRODUCTS
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/dashboard"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending"
-                    : isActive
-                    ? "text-[#3a86ff] underline"
-                    : ""
-                }
-              >
-                DASHBOARD
-              </NavLink>
-            </li>
+            {user && isAdmin && (
+              <li>
+                <NavLink
+                  to="/dashboard/statistics"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-[#3a86ff] underline"
+                      : ""
+                  }
+                >
+                  DASHBOARD
+                </NavLink>
+              </li>
+            )}
+            {user && !isAdmin && (
+              <li>
+                <NavLink
+                  to="/dashboard/myProfile"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-[#3a86ff] underline"
+                      : ""
+                  }
+                >
+                  DASHBOARD
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
 
@@ -92,9 +112,16 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <h1 className="justify-between ml-2"> {user.displayName}</h1>
-                  <li className="bg-[#3a86ff] text-white font-bold mt-2">
-                    <Link to="/dashboard/myProfile">DashBoard</Link>
-                  </li>
+                  {user && isAdmin && (
+                    <li className="bg-[#3a86ff] text-white font-bold mt-2">
+                      <Link to="/dashboard/statistics">DashBoard</Link>
+                    </li>
+                  )}
+                  {user && !isAdmin && (
+                    <li className="bg-[#3a86ff] text-white font-bold mt-2">
+                      <Link to="/dashboard/statistics">DashBoard</Link>
+                    </li>
+                  )}
                   <li>
                     <button
                       onClick={logOut}
