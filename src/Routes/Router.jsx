@@ -18,6 +18,7 @@ import StatisticsExhibit from "../Pages/Dashboard/StatisticsExhibit/StatisticsEx
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import ManageCoupons from "../Pages/Dashboard/ManageCoupons/ManageCoupons";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 const myCreateRoutes = createBrowserRouter([
   {
@@ -99,7 +100,11 @@ const myCreateRoutes = createBrowserRouter([
       },
       {
         path: "manageUsers",
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageCoupons",
