@@ -1,4 +1,44 @@
+import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 const ManageCoupons = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const handleCouponSubmit = (e) => {
+    e.preventDefault();
+    console.log("clickeed");
+
+    const form = e.target;
+    const code = form.code.value;
+    const date = form.date.value;
+    const description = form.description.value;
+    const amount = form.code.value;
+
+    const couponDetails = {
+      code,
+      date,
+      description,
+      amount,
+    };
+    console.log(couponDetails);
+
+    axiosSecure.post("/coupons", couponDetails).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        form.reset();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: 'Couponadded successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
+
   return (
     <div>
       {/* add coupon form */}
@@ -6,7 +46,7 @@ const ManageCoupons = () => {
         <h1 className="text-[30px] text-center font-bold text-[#ff006e]">
           Add a coupon
         </h1>
-        <form>
+        <form onSubmit={handleCouponSubmit}>
           {/* coupon code */}
           <div className="form-control w-[350px] ml-4 ">
             <label className="label">
@@ -17,7 +57,7 @@ const ManageCoupons = () => {
             <label className="">
               <input
                 type="text"
-                name="codet"
+                name="code"
                 placeholder="Coupon Code"
                 className="input input-bordered rounded-none  w-full"
               />
@@ -77,7 +117,7 @@ const ManageCoupons = () => {
       </div>
 
       {/* show all coupon here */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-[1300px] mx-auto text-white">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-[1300px] mx-auto text-white">
         <div className="h-[200px] w-[300px] ml-[40px] bg-primary text-primary-content rounded-xl mt-[50px] border-2 border-[#fcca46]">
           <div className="p-4">
             <div className="font-bold">
@@ -99,7 +139,7 @@ const ManageCoupons = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
