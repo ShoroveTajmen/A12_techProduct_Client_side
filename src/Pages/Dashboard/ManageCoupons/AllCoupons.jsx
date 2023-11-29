@@ -1,10 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAllCoupons from "../../../hooks/useAllCoupons";
+import Swal from "sweetalert2";
+
 
 const AllCoupons = () => {
   //fetch payment details based on specific email
   const [coupons, refetch] = useAllCoupons();
+  const axiosSecure = useAxiosSecure();
+
+  const deleteCoupon = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/coupon/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Coupon has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
 
   return (
     <div>
@@ -41,22 +69,30 @@ const AllCoupons = () => {
                 </button>
                 <dialog id={coupon._id} className="modal">
                   <div className="modal-box text-center">
-                   <img className="" src="https://i.ibb.co/KK1W693/offer.jpg" alt="" />
-                   <h1 className="text-3xl font-bold bg-red-600">Get {coupon?.amount}% Discount</h1>
-                   <div className="modal-action">
-                  <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn btn-primary ">
-                      Close
-                    </button>
-                  </form>
-                </div>
+                    <img
+                      className=""
+                      src="https://i.ibb.co/KK1W693/offer.jpg"
+                      alt=""
+                    />
+                    <h1 className="text-3xl font-bold bg-red-600">
+                      Get {coupon?.amount}% Discount
+                    </h1>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn btn-primary ">Close</button>
+                      </form>
+                    </div>
                   </div>
                 </dialog>
                 <button className="btn btn-sm mr-1 bg-green-600 text-white border-none">
                   Edit
                 </button>
-                <button className="btn btn-sm bg-red-700 text-white border-none">
+
+                <button
+                  onClick={() => deleteCoupon(coupon._id)}
+                  className="btn btn-sm bg-red-700 text-white border-none"
+                >
                   Delete Coupon
                 </button>
               </div>
