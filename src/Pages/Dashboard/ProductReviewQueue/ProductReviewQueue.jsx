@@ -20,7 +20,7 @@ const ProductReviewQueue = () => {
       return res.data;
     },
   });
-  //   console.log(data)
+    console.log(data)
   if (isLoading) {
     return <p>Hello</p>;
   }
