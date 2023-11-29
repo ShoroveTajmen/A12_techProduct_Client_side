@@ -79,7 +79,6 @@ const EditCoupon = () => {
               <input
                 type="text"
                 name="code"
-                defaultValue={code}
                 placeholder="Coupon Code"
                 className="input input-bordered rounded-none  w-full"
               />
@@ -95,7 +94,6 @@ const EditCoupon = () => {
               <input
                 type="date"
                 name="date"
-                defaultValue={date}
                 placeholder="Expire Date"
                 className="input input-bordered rounded-none  w-full"
               />
@@ -111,7 +109,6 @@ const EditCoupon = () => {
               <input
                 type="text"
                 name="description"
-                defaultValue={description}
                 placeholder="Description"
                 className="input input-bordered rounded-none  w-full"
               />
@@ -127,7 +124,6 @@ const EditCoupon = () => {
               <input
                 type="number"
                 name="amount"
-                defaultValue={amount}
                 placeholder="Discount Amount"
                 className="input input-bordered rounded-none  w-full"
               />

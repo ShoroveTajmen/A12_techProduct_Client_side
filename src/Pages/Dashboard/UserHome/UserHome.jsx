@@ -3,15 +3,15 @@ import { MdVerified } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const UserHome = () => {
   const { user } = useAuth();
-  // console.log(user.email);
-  // console.log(user.displayName);
-  // console.log(user.photoURL);
+  const axiosSecure = useAxiosSecure();
+  const [couponCode, setCouponCode] = useState("");
+  const [discountedAmount, setDiscountedAmount] = useState(100);
 
   //fetch payment details based on specific email
-  const axiosSecure = useAxiosSecure();
   const { data: payments = [], refetch } = useQuery({
     queryKey: ["paymentDetails"],
     queryFn: async () => {
@@ -19,10 +19,27 @@ const UserHome = () => {
       return res.data;
     },
   });
-
   const paymentsUser = payments[0]?.email;
   const status = payments[0]?.status;
   // console.log(paymentsUser, status);
+
+  const handleCouponValidation = async () => {
+    try {
+      // Make an API call to validate the coupon code on the backend
+      const res = await axiosSecure.post("/validateCoupon", {
+        code: couponCode,
+      });
+      if (res.data.valid) {
+        // If the coupon is valid, update the discounted amount
+        setDiscountedAmount(res.data.discountedAmount);
+      } else {
+        // Handle invalid coupon code (show an error message, etc.)
+        console.log("Invalid coupon code");
+      }
+    } catch (error) {
+      console.error("Error validating coupon:", error);
+    }
+  };
 
   return (
     <div>
@@ -49,7 +66,8 @@ const UserHome = () => {
             <>
               <div>
                 <h1 className="text-center text-red-600 text-lg font-bold flex justify-center">
-                  Verified User<MdVerified className="mt-1 ml-2 text-blue-600"></MdVerified>
+                  Verified User
+                  <MdVerified className="mt-1 ml-2 text-blue-600"></MdVerified>
                 </h1>
               </div>
             </>
@@ -57,14 +75,27 @@ const UserHome = () => {
             <>
               {" "}
               <div className="flex justify-center mt-[20px]">
-                {" "}
+                <input
+                  type="text"
+                  placeholder="Enter Coupon Code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  className="border p-2"
+                />
+                <button
+                  onClick={handleCouponValidation}
+                  className="bg-[#ff006e] p-[10px] text-white font-bold btn rounded-none"
+                >
+                  Apply Coupon
+                </button>
+              </div>
+              <div className="flex justify-center mt-[20px]">
                 <h1 className="bg-blue-700 text-white w-[150px] p-2 font-bold text-center text-lg">
                   Subscribe!
                 </h1>
                 <Link to="/dashboard/payment">
-                  {" "}
                   <button className="bg-[#ff006e] p-[10px] text-white font-bold btn rounded-none">
-                    Pay $100
+                    Pay ${discountedAmount}
                   </button>
                 </Link>
               </div>
