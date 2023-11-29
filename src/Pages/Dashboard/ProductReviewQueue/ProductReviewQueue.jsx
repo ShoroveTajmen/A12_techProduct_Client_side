@@ -46,27 +46,22 @@ const ProductReviewQueue = () => {
     // Refetch the data to update the UI
     refetch();
   };
+ 
+
   const handleRejectProduct = async (id) => {
-    // Make an API call to update the product status to 'accepted'
-    await axiosSecure
-      .patch(`/updateProductStatus2/${id}`, {
-        status: "rejected",
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.modifiedCount > 1) {
+      await axiosSecure.delete(`/deleteProduct/${id}`).then((res) => {
+        if (res.data.deletedCount > 0) {
+          refetch();
           Swal.fire({
-            position: "top-end",
+            title: "Deleted!",
+            text: "Product Rejected",
             icon: "success",
-            title: "Product Rejected",
-            showConfirmButton: false,
-            timer: 1500,
           });
         }
       });
-    // Refetch the data to update the UI
-    refetch();
+    
   };
+
 
   const handleMarksFeatured = async (id) => {
     await axiosSecure.post(`/marksFeatured/${id}`);
