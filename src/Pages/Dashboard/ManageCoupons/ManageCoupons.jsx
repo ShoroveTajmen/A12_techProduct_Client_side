@@ -1,8 +1,11 @@
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import AllCoupons from "./AllCoupons";
+import useAllCoupons from "../../../hooks/useAllCoupons";
 
 const ManageCoupons = () => {
+  const [coupons, refetch] = useAllCoupons();  
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -14,7 +17,7 @@ const ManageCoupons = () => {
     const code = form.code.value;
     const date = form.date.value;
     const description = form.description.value;
-    const amount = form.code.value;
+    const amount = form.amount.value;
 
     const couponDetails = {
       code,
@@ -28,10 +31,11 @@ const ManageCoupons = () => {
       console.log(res.data);
       if (res.data.insertedId) {
         form.reset();
+        refetch();
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: 'Couponadded successfully!',
+          title: 'Coupon added successfully!',
           showConfirmButton: false,
           timer: 1500,
         });
@@ -42,7 +46,7 @@ const ManageCoupons = () => {
   return (
     <div>
       {/* add coupon form */}
-      <div className=" w-[400px] h-[500px] bg-gray-400 p-4 ">
+      <div className=" w-[400px] h-[500px] bg-gray-400 p-4 mx-auto">
         <h1 className="text-[30px] text-center font-bold text-[#ff006e]">
           Add a coupon
         </h1>
@@ -117,6 +121,7 @@ const ManageCoupons = () => {
       </div>
 
       {/* show all coupon here */}
+      <AllCoupons></AllCoupons>
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-[1300px] mx-auto text-white">
         <div className="h-[200px] w-[300px] ml-[40px] bg-primary text-primary-content rounded-xl mt-[50px] border-2 border-[#fcca46]">
           <div className="p-4">
