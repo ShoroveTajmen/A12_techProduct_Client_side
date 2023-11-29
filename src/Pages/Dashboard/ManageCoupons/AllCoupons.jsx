@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAllCoupons from "../../../hooks/useAllCoupons";
 import Swal from "sweetalert2";
-
+import { Link } from "react-router-dom";
 
 const AllCoupons = () => {
   //fetch payment details based on specific email
@@ -85,9 +85,12 @@ const AllCoupons = () => {
                     </div>
                   </div>
                 </dialog>
-                <button className="btn btn-sm mr-1 bg-green-600 text-white border-none">
-                  Edit
-                </button>
+
+                <Link to={`editCoupon/${coupon?._id}`}>
+                  <button className="btn btn-sm mr-1 bg-green-600 text-white border-none">
+                    Edit
+                  </button>
+                </Link>
 
                 <button
                   onClick={() => deleteCoupon(coupon._id)}

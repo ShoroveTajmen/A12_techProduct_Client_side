@@ -19,6 +19,7 @@ import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import ManageCoupons from "../Pages/Dashboard/ManageCoupons/ManageCoupons";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import EditCoupon from "../Pages/Dashboard/EditCoupon/EditCoupon";
 
 const myCreateRoutes = createBrowserRouter([
   {
@@ -109,6 +110,12 @@ const myCreateRoutes = createBrowserRouter([
       {
         path: "manageCoupons",
         element: <ManageCoupons></ManageCoupons>,
+      },
+      {
+        path: "manageCoupons/editCoupon/:id",
+        element: <EditCoupon></EditCoupon>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5001/coupons/${params.id}`),
       },
     ],
   },
