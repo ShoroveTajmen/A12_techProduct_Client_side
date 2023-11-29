@@ -17,6 +17,11 @@ const ReviewProducts = ({ id }) => {
       return res.data;
     },
   });
+  // const handleSomeAction = () => {
+  //   // Perform some action that should trigger a refetch
+  //   // For example, when a button is clicked, you can call refetch to update the data
+  //   refetch();
+  // };
   if (isLoading) {
     return <p>Hello</p>;
   }
@@ -54,6 +59,7 @@ const ReviewProducts = ({ id }) => {
             arrivals !!
           </p>
         )}
+        {/* <button className="btn" onClick={handleSomeAction}>Show Review</button> */}
       </div>
     </div>
   );

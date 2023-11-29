@@ -11,18 +11,20 @@ import { PiChartBarFill } from "react-icons/pi";
 import { PiUsersFourFill } from "react-icons/pi";
 import { RiCoupon5Fill } from "react-icons/ri";
 import useAdmin from "../../hooks/useAdmin";
+import useModerator from "../../hooks/useModerator";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
+  const [isModerator] = useModerator();
   return (
     <div>
       <div className="flex">
         {/* dashboard side bar */}
         <div className="w-64 min-h-screen bg-[#004e89]">
           <ul className="menu p-4 ">
-            {isAdmin ? (
+            {/* Admin Portion */}
+            {isAdmin && (
               <>
-                {/* Admin Portion */}
                 <li className="font-bold  uppercase mt-2 text-white">
                   <NavLink to="/dashboard/statistics">
                     <PiChartBarFill className="text-yellow-400"></PiChartBarFill>
@@ -44,9 +46,12 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
               </>
-            ) : (
+            )}
+
+
+              {/* Normal Users Portion */}
+              {!isAdmin && !isModerator && (
               <>
-                {/* normal users portion */}
                 <li className="font-bold  uppercase  text-white">
                   <NavLink to="/dashboard/myProfile">
                     <FaAddressBook className="text-yellow-400"></FaAddressBook>
@@ -68,21 +73,27 @@ const Dashboard = () => {
               </>
             )}
 
-            {/* Moderator portion */}
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/productReviewQueue">
-                <MdOutlineReviews className="text-yellow-400"></MdOutlineReviews>
-                Product Review Queue
-              </NavLink>
-            </li>
 
-            <li className="font-bold  uppercase mt-2 text-white">
-              <NavLink to="/dashboard/reportedProduct">
-                <MdReportOff className="text-yellow-400"></MdReportOff>Reported
-                Products
-              </NavLink>
-            </li>
+             {/* Moderator Portion */}
+             {isModerator && (
+              <>
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/productReviewQueue">
+                    <MdOutlineReviews className="text-yellow-400"></MdOutlineReviews>
+                    Product Review Queue
+                  </NavLink>
+                </li>
 
+                <li className="font-bold  uppercase mt-2 text-white">
+                  <NavLink to="/dashboard/reportedProduct">
+                    <MdReportOff className="text-yellow-400"></MdReportOff>
+                    Reported Products
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+           
             {/* Shared NavLink */}
             <div className="divider divider-warning w-[230px] mx-auto"></div>
             <li className="font-bold  uppercase mt-2 text-white">

@@ -1,10 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useAdmin from "../../../hooks/useAdmin";
+import useModerator from "../../../hooks/useModerator";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isAdmin] = useAdmin();
+  const [isModerator] = useModerator();
   // console.log(user);
   return (
     <div>
@@ -61,7 +63,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
-            {user && !isAdmin && (
+            {user && !isAdmin && !isModerator && (
               <li>
                 <NavLink
                   to="/dashboard/myProfile"
@@ -77,6 +79,23 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+            {user && isModerator && (
+              <li>
+                <NavLink
+                  to="/dashboard/productReviewQueue"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "text-[#3a86ff] underline"
+                      : ""
+                  }
+                >
+                  DASHBOARD
+                </NavLink>
+              </li>
+            )}
+        
           </ul>
         </div>
 
@@ -117,11 +136,18 @@ const Navbar = () => {
                       <Link to="/dashboard/statistics">DashBoard</Link>
                     </li>
                   )}
-                  {user && !isAdmin && (
+
+                  {user && !isAdmin && !isModerator && (
                     <li className="bg-[#3a86ff] text-white font-bold mt-2">
-                      <Link to="/dashboard/statistics">DashBoard</Link>
+                      <Link to="/dashboard/myProfile">DashBoard</Link>
                     </li>
                   )}
+                  {user && isModerator  && (
+                    <li className="bg-[#3a86ff] text-white font-bold mt-2">
+                      <Link to="/dashboard/productReviewQueue">DashBoard</Link>
+                    </li>
+                  )}
+
                   <li>
                     <button
                       onClick={logOut}

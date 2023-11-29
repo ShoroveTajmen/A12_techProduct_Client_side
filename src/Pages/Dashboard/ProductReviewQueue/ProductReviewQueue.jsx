@@ -16,7 +16,7 @@ const ProductReviewQueue = () => {
     queryKey: ["userProducts"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/allProducts?status=pending`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });

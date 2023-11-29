@@ -17,23 +17,6 @@ const ProductDetails = () => {
   const { user } = useAuth();
   const [productReported, setProuctReported] = useState(false);
 
-    // //using tanstack query to get specific product productData
-    // const {
-    //   data: productReviews,
-    //   refetch: refetchh,
-    //   isLoading: loading2,
-    // } = useQuery({
-    //   queryKey: ["productReview"],
-    //   queryFn: async () => {
-    //     const res = await axiosSecure.get(`/productReview/${id}`);
-    //     // console.log(res.data);
-    //     return res.data;
-    //   },
-    // });
-    // if (loading2) {
-    //   return <p>Hello</p>;
-    // }
-  
 
   //using tanstack query to get specific product productData
   const {
@@ -134,6 +117,7 @@ const ProductDetails = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        
       }
     });
   };
