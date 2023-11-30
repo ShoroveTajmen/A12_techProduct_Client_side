@@ -34,7 +34,7 @@ const myCreateRoutes = createBrowserRouter([
       {
         path: "products",
         element: <Products></Products>,
-        loader: () => fetch("http://localhost:5001/productsCount"),
+        loader: () => fetch("https://tech-products-server-two.vercel.app/productsCount"),
       },
       {
         path: "/product/:id",
@@ -77,7 +77,7 @@ const myCreateRoutes = createBrowserRouter([
         path: "updateProduct/:id",
         element: <UpdateProducts></UpdateProducts>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5001/products/${params.id}`),
+          fetch(`https://tech-products-server-two.vercel.app/products/${params.id}`),
       },
       {
         path: "payment",
@@ -115,7 +115,7 @@ const myCreateRoutes = createBrowserRouter([
         path: "manageCoupons/editCoupon/:id",
         element: <EditCoupon></EditCoupon>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5001/coupons/${params.id}`),
+          fetch(`https://tech-products-server-two.vercel.app/coupons/${params.id}`),
       },
     ],
   },

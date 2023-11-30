@@ -57,7 +57,7 @@ const TrendingProducts = () => {
         Our Most Trending Products
       </h1>
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  lg:gap-5  md:w-[770px] w-[350px] lg:w-[1100px] mx-auto mt-[30px] md:mt-[70px] md:mb-[70px] ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  lg:gap-5  md:w-[770px] w-[350px] lg:w-[1100px] mx-auto mt-[30px] md:mt-[70px] md:mb-[70px] md:ml-[10px] ml-[30px] lg:ml-[250px]">
           {products.slice(0, 6).map((product) => (
             <div
               key={product._id}
@@ -136,7 +136,7 @@ const TrendingProducts = () => {
       </div>
       <Link to='/products'>
         {" "}
-        <button className="text-white btn bg-[#ff006e] border-none rounded-none font-bold text-lg ml-[700px]">
+        <button className="text-white btn bg-[#ff006e] border-none rounded-none font-bold text-lg lg:ml-[700px] md:ml-[270px] ml-[100px] mt-[40px] md:mt-[0px] lg:mt-[0px]">
           Show All Products
         </button>
       </Link>

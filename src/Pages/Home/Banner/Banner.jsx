@@ -16,7 +16,7 @@ const Banner = () => {
           className="relative ml-[19px] md:ml-[10px] lg:ml-[40px] p-2"
           data-aos="zoom-in"
         >
-          <div className="absolute mt-[180px] md:mt-[140px]  lg:mt-[150px] lg:w-[550px] mx-auto md:ml-[0px] lg:ml-[0px] text-left ">
+          <div className="absolute mt-[100px] md:mt-[140px]  lg:mt-[150px] lg:w-[550px] mx-auto md:ml-[0px] lg:ml-[0px] text-left ">
             <h1 className=" text-white text-5xl md:text-5xl lg:text-4xl font-xl mb-[10px] md:mb-[20px] lg:mb-[30px] font-bold">
             TechDiscover: Unveiling the Latest in Innovation
             </h1>
@@ -29,8 +29,8 @@ const Banner = () => {
             <div className='flex gap-4 mt-[50px]'>
                 <img className="w-[150px] h-[100px] border-2 border-yellow-600" src={img1} alt="" />
                 <img className="w-[150px] h-[100px] border-2 border-yellow-600" src={img2} alt="" />
-                <img className="w-[150px] h-[100px] border-2 border-yellow-600" src={img3} alt="" />
-                <img className="w-[150px] h-[100px] border-2 border-yellow-600" src={img6} alt="" />
+                <img className="w-[150px] h-[100px] border-2 border-yellow-600 hidden lg:block md:block" src={img3} alt="" />
+                <img className="w-[150px] h-[100px] border-2 border-yellow-600 hidden lg:block md:block" src={img6} alt="" />
             </div>
           </div>
         </div>

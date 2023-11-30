@@ -1,22 +1,54 @@
 import { useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 import useAuth from "../../../hooks/useAuth";
-import axios from "axios";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+
 
 const AddProducts = () => {
   const [tags, setTags] = useState([]);
+  const [hasAddedProduct, setHasAddedProduct] = useState(false);
   const { user } = useAuth();
+
   const axiosSecure = useAxiosSecure();
 
   const OwnerName = user.displayName;
   const OwnerImage = user.photoURL;
   const OwnerEmail = user.email;
 
+ 
+//   const {
+//     data: Uproduct = [],
+//     refetch,
+//     isLoading,
+//   } = useQuery({
+//     queryKey: ["specificProduct"],
+//     queryFn: async () => {
+//       const res = await axiosSecure.get(`/products/${user.email}`);
+//       // console.log(res.data)
+//       return res.data;
+//     },
+//   });
+//   if(isLoading){
+//     return <p>hello</p>
+//   }
+// console.log(Uproduct);
+
+
+  //load payments data
+  const { data: pData = {} } = useQuery({
+    queryKey: ["verifiedUser"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/payments/${user.email}`);
+      return res.data;
+    },
+  });
+  const verifiedEmail = pData[0]?.email || "";
+  // console.log(verifiedEmail, user.email);
+
   //set real time
   const createdAt = new Date();
-
   const handleAddProduct = (e) => {
     e.preventDefault();
 
@@ -47,6 +79,7 @@ const AddProducts = () => {
       if (res.data.insertedId) {
         form.reset();
         setTags([]);
+        setHasAddedProduct(true);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -57,6 +90,7 @@ const AddProducts = () => {
       }
     });
   };
+
   return (
     <div className="shadow-lg p-24 lg:w-[1100px] mx-auto mt-12 mb-12 bg-white">
       <h2 className="text-4xl mb-8 lg:mb-0 font-bold uppercase text-[#144272]">
@@ -148,11 +182,25 @@ const AddProducts = () => {
             </label>
           </div>
         </div>
-        <input
-          type="submit"
-          value="Add Product"
-          className=" btn  bg-[#3a86ff] font-bold text-white uppercase lg:w-[400px] ml-[50px] lg:ml-[250px]"
-        />
+        {(!hasAddedProduct || verifiedEmail === user.email) ? (
+          <>
+            {" "}
+            <input
+              type="submit"
+              value="Add Product"
+              className=" btn  bg-[#3a86ff] font-bold text-white uppercase lg:w-[400px] ml-[50px] lg:ml-[250px]"
+            />
+          </>
+        ) : (
+          <>
+            <input
+              type="submit"
+              disabled
+              value="Add Product"
+              className=" btn  bg-[#3a86ff] font-bold text-white uppercase lg:w-[400px] ml-[50px] lg:ml-[250px]"
+            />
+          </>
+        )}
       </form>
     </div>
   );
