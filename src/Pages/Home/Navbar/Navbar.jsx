@@ -12,13 +12,13 @@ const Navbar = () => {
     <div>
       <nav className="flex flex-col md:flex-row md:justify-between md:items-center py-3 md:py-2  md:px-5 md:ml-0 bg-[#0A2647]">
         <div className="flex">
-          <h1 className="btn btn-ghost text-[30px] text-[#3a86ff]">
+          <h1 className="btn btn-ghost text-[30px] text-[#3a86ff] ml-[120px] md:ml-[0px] lg:ml-[0px]">
             Byte <span className="text-[#ff006e]">Blitz</span>
           </h1>
         </div>
         {/* navbar link page route */}
         <div className="lg:w-1/3 lg:ml-[300px] ml-[70px]">
-          <ul className="flex gap-5 font-bold  flex-row md:flex-row md:justify-center md:items-center text-white text-lg">
+          <ul className="flex gap-5 font-bold  flex-row md:flex-row md:justify-center md:items-center text-white text-lg ml-[15px] md:ml-[0px] lg:ml-[0px]">
             <li>
               <NavLink
                 to="/"
@@ -113,7 +113,7 @@ const Navbar = () => {
           {/* profile pic and username and login part */}
           <div className="">
             {user?.email ? (
-              <div className="dropdown dropdown-end">
+              <div className="dropdown dropdown-end ml-[190px] md:ml-[0px] lg:ml-[0px]">
                 <label
                   tabIndex={0}
                   className="btn btn-ghost btn-circle avatar border-2 border-[#3a86ff]"
