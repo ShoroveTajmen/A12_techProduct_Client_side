@@ -60,14 +60,14 @@ const StatisticsExhibit = () => {
   return (
     <div className="flex justify-center">
       <div>
-      <PieChart width={600} height={600}>
+      <PieChart width={300} height={500} className="w-[400px] h-[400px]">
             <Pie
               data={pieData}
               cx="50%"
               cy="50%"
               labelLine={false}
               label={renderCustomizedLabel}
-              outerRadius={250}
+              outerRadius={150}
               fill="#8884d8"
               dataKey="value"
             >

@@ -75,7 +75,7 @@ const ManageUsers = () => {
         <h1 className="text-white">All Users</h1>
         <h1 className="text-white">Total Users</h1>
       </div>
-      <div className="overflow-x-auto bg-white">
+      <div className="overflow-x-auto bg-white md:w-[450px] lg:w-full w-[360px]">
         <table className="table table-zebra w-full">
           {/* head */}
           <thead>

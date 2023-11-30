@@ -46,7 +46,7 @@ const ManageCoupons = () => {
   return (
     <div>
       {/* add coupon form */}
-      <div className=" w-[400px] h-[500px] bg-gray-400 p-4 mx-auto">
+      <div className=" w-[400px] mt-[50px] md:w-[400px] lg:w-[400px] h-[500px] bg-gray-400 p-2 mx-auto ml-[10px] md:ml-[80px] lg:ml-[400px]">
         <h1 className="text-[30px] text-center font-bold text-[#ff006e]">
           Add a coupon
         </h1>

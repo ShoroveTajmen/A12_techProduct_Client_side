@@ -106,7 +106,7 @@ const Dashboard = () => {
         </div>
 
         {/* dashboard content */}
-        <div className="flex-1 p-8">
+        <div className="lg:flex-1 lg:p-8 w-[400px] md:w-[500px]">
           <Outlet></Outlet>
         </div>
       </div>

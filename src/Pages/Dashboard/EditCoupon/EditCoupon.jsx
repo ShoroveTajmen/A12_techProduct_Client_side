@@ -63,9 +63,9 @@ const EditCoupon = () => {
 
   return (
     <div>
-      <div className=" w-[400px] h-[500px] bg-gray-400 p-4 mx-auto">
+      <div className=" w-[400px] h-[500px] bg-gray-400 p-4 mx-auto ml-[10px] md:ml-[80px] lg:ml-[400px]">
         <h1 className="text-[30px] text-center font-bold text-[#ff006e]">
-          Add a coupon
+          Update a coupon
         </h1>
         <form onSubmit={handleUpdateCoupon}>
           {/* coupon code */}
@@ -131,7 +131,7 @@ const EditCoupon = () => {
           </div>
           <input
             type="submit"
-            value="Add Coupon"
+            value="Update Coupon"
             className=" btn  bg-[#ff006e] font-bold text-white uppercase mt-4 ml-4 rounded-none border-none"
           />
         </form>
