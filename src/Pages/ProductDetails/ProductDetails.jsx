@@ -124,8 +124,8 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <div className="flex justify-around gap-6 items-center mt-[100px] w-[1200px] mx-auto">
-        <div className="card w-[700px] bg-base-100 rounded-none border-4 border-[#3a86ff] h-[700px]">
+      <div className="flex flex-col lg:flex-row justify-around gap-6 items-center mt-[100px] lg:w-[1200px] mx-auto">
+        <div className="card lg:w-[700px] bg-base-100 rounded-none border-4 border-[#3a86ff] h-[700px]">
           <figure className="px-10 pt-10">
             <img
               src={productData?.productPic}

@@ -29,7 +29,7 @@ const ReviewProducts = ({ id }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-[1300px] mx-auto ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:w-[1300px] mx-auto ">
         {data && data.length > 0 ? (
           data.map((review) => (
             <div
