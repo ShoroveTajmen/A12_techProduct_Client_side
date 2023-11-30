@@ -58,7 +58,7 @@ const MyProducts = () => {
   return (
     <div>
       <div>
-        <div className="overflow-x-auto bg-white shadow-xl">
+        <div className="overflow-x-auto bg-white shadow-xl md:w-[450px] lg:w-full w-[360px]">
           <table className="table w-full">
             {/* head */}
             <thead>

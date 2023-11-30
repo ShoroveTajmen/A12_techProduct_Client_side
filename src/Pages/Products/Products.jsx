@@ -117,7 +117,7 @@ const Products = () => {
             type="text"
             name="search"
             id=""
-            className="w-[500px] h-[50px] border-2 border-blue-300 relative"
+            className="w-[200px] md:w-[500px] lg:w-[500px] h-[50px] border-2 border-blue-300 relative"
           />
           <input
             type="submit"
@@ -129,7 +129,7 @@ const Products = () => {
 
       {/* show all data */}
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-5  md:w-[770px] w-[350px] lg:w-[1500px] mx-auto mt-[30px] md:mt-[70px] md:mb-[70px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-5  md:w-[770px] w-[350px] lg:w-[1500px] mx-auto mt-[30px] md:mt-[70px] md:mb-[70px] md:ml-[10px] ml-[30px] lg:ml-[50px]">
           {products.map((product) => (
             <div
               key={product._id}
@@ -208,7 +208,7 @@ const Products = () => {
       </div>
 
       {/* pagination */}
-      <div className=" text-red-700 text-center mb-[40px]">
+      <div className=" text-red-700 text-center mb-[40px] mt-[50px]">
         <button onClick={handlePrevPage} className="btn mr-[10px] bg-[#ff006e] text-white rounded-none border-none font-bold">
           Prev
         </button>

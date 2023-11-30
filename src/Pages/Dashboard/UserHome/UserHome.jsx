@@ -43,7 +43,7 @@ const UserHome = () => {
 
   return (
     <div>
-      <div className="card w-[700px] h-[500px] bg-base-100 shadow-xl">
+      <div className="card w-[350px] md:w-[400px] lg:w-[700px] h-[500px] bg-base-100 shadow-xl">
         <figure className="px-10 pt-10">
           <img
             src={user.photoURL}

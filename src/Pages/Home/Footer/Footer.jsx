@@ -15,7 +15,7 @@ const Footer = () => {
           {/* footer container div */}
           <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-8 ml-[50px] md:ml-[10px] lg:ml-[0px] pt-[100px] ">
             {/* 1st part */}
-            <div className="col-span-2 w-[300px] md:w-[100px] lg:w-[300px] ">
+            <div className="col-span-2 w-[300px] md:w-[100px] lg:w-[300px] ml-[-20px] md:ml-[-0px] lg:ml-[-0px]">
               <img
                 className="w-[500px] md:w-[100px] lg:w-[240px] h-[100px]  pl-[20px] rounded-xl"
                 src="https://i.ibb.co/4g5CCbt/logo1.jpg"

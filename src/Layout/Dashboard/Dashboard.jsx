@@ -18,10 +18,10 @@ const Dashboard = () => {
   const [isModerator] = useModerator();
   return (
     <div>
-      <div className="flex">
+      <div className="flex flex-col lg:flex-row md:flex-row">
         {/* dashboard side bar */}
-        <div className="w-64 min-h-screen bg-[#004e89]">
-          <ul className="menu p-4 ">
+        <div className="lg:w-64 md:w-64 w-full lg:min-h-screen md:min-h-screen lg:bg-[#004e89] md:lg:bg-[#004e89]">
+          <ul className="lg:menu md:menu p-4 flex flex-row md:flex-col lg:flex-col">
             {/* Admin Portion */}
             {isAdmin && (
               <>
@@ -52,13 +52,13 @@ const Dashboard = () => {
               {/* Normal Users Portion */}
               {!isAdmin && !isModerator && (
               <>
-                <li className="font-bold  uppercase  text-white">
+                <li className="font-bold  uppercase  text-white mr-6">
                   <NavLink to="/dashboard/myProfile">
                     <FaAddressBook className="text-yellow-400"></FaAddressBook>
                     My Profile
                   </NavLink>
                 </li>
-                <li className="font-bold  uppercase mt-2 text-white">
+                <li className="font-bold  uppercase mt-2 text-white mr-6">
                   <NavLink to="/dashboard/addProducts">
                     <FaShoppingBasket className="text-yellow-400"></FaShoppingBasket>
                     Add Products
@@ -95,7 +95,7 @@ const Dashboard = () => {
 
            
             {/* Shared NavLink */}
-            <div className="divider divider-warning w-[230px] mx-auto"></div>
+            <div className="divider divider-warning w-[230px] mx-auto hidden lg:block bg-yellow-400 md:block h-[6px]"></div>
             <li className="font-bold  uppercase mt-2 text-white">
               <NavLink to="/">
                 <FaHome className="text-yellow-400"></FaHome>

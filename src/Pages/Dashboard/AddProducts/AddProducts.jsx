@@ -197,7 +197,7 @@ const AddProducts = () => {
               type="submit"
               disabled
               value="Add Product"
-              className=" btn  bg-[#3a86ff] font-bold text-white uppercase lg:w-[400px] ml-[50px] lg:ml-[250px]"
+              className=" btn  bg-[#3a86ff] font-bold text-white uppercase lg:w-[400px]  lg:ml-[250px]"
             />
           </>
         )}

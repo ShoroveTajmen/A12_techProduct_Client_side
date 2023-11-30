@@ -11,7 +11,7 @@ const CouponSlider = () => {
   return (
     <div className="mt-[100px]">
       <img className="w-[450px] mx-auto" src="https://i.ibb.co/bH1TGD6/sale.jpg" alt="" />
-      <div className="text-black lg:w-[600px] lg:h-[300px] md:h-[300px] h-[330px] mx-auto bg-white">
+      <div className="text-black lg:w-[600px] lg:h-[300px] md:h-[300px] h-[400px] mx-auto bg-white">
         <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
           {coupons?.map((coupon) => (
             <SwiperSlide key={coupon._id}>
