@@ -53,7 +53,7 @@ const ReportedProduct = () => {
   return (
     <div>
       <div>
-        <div className="overflow-x-auto bg-white shadow-xl">
+        <div className="overflow-x-auto bg-white shadow-xl md:w-[450px] lg:w-full w-[360px] mb-[50px] ml-[20px] mt-[50px] h-[700px]">
           <table className="table w-full">
             {/* head */}
             <thead>

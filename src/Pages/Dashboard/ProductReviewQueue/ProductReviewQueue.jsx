@@ -84,7 +84,7 @@ const ProductReviewQueue = () => {
   return (
     <div>
       <div>
-        <div className="overflow-x-auto bg-white shadow-xl">
+        <div className="overflow-x-auto bg-white shadow-xl md:w-[450px] lg:w-full w-[380px]  mb-[50px] ml-[20px] ">
           <table className="table w-full">
             {/* head */}
             <thead>
