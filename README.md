@@ -1,5 +1,6 @@
 - Website Name --> ByteBlitz [ Discover and share the latest tech products Website]
 - Live Site Link --> [ByteBlitz](https://disgusted-skirt.surge.sh)
+- Server Side Repo Link --> (https://github.com/ShoroveTajmen/A12_techProduct_Server_Side)
 
 - In below I will list out the 5 Project features ::-
 
@@ -26,6 +27,8 @@ The fields for name, photo, email, and password on the registration page. At lea
 
 - JWT related Overview -> 
 Json web token verification is added in this project. When a user log in to the website json web token will be stored in the local storage. Json web token also created when user log in via google. JWT verfication added in private route, unauthorized user can not access any data.
+
+-Technologies Used -> JavaScript, React.js, Node.js, Express.js, MongoDB, Firebase
 
 
 
