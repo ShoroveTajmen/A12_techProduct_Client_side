@@ -1,7 +1,7 @@
 const FAQ = () => {
   return (
     <div className="text-white">
-      <h1 className="text-center mt-[50px] font-bold text-[40px]">
+      <h1 className="text-center mt-[160px] font-bold text-[40px]">
         Frequently Asked Questions
       </h1>
       <div className="w-[1000px] mx-auto mt-[50px] text-black">
